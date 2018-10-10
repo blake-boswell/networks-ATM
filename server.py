@@ -27,14 +27,15 @@ class Account:
         self.balance = balance
 
     def withdraw(self, amount):
-        if amount <= self.balance:
+        if amount <= self.balance and amount >= 0:
             self.balance -= amount
             return True
         else:
             return False
 
     def deposit(self, amount):
-        self.balance += amount
+        if amount >= 0:
+            self.balance += amount
 
     def balanceAction(self):
         response = 'Balance: ${}'.format(self.balance)
@@ -45,12 +46,15 @@ class Account:
         if didWithdraw:
             response = 'Successfully withdrew ${}.\nRemaining balance: ${}'.format(amount, self.balance)
         else:
-            response = 'Failed to withdraw amount: ${}\nNot enough balance. Current balance: ${}'.format(amount, self.balance)
+            response = 'Failed to withdraw amount: ${}\nCurrent balance: ${}'.format(amount, self.balance)
         return response
 
     def depositAction(self, amount):
-        self.deposit(amount)
-        response = 'Added ${} to your account.\nNew balance: ${}'.format(amount, self.balance)
+        if amount >= 0:
+            self.deposit(amount)
+            response = 'Added ${} to your account.\nNew balance: ${}'.format(amount, self.balance)
+        else:
+            response = 'Failed to deposit. Nice try, you cannot deposit that which doesn\'t exist.'
         return response
 
 # Set port
